@@ -45,5 +45,26 @@ services:
       rabbitmq:
         condition: service_healthy
 
+  mongo:
+    image: mongo:7
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    
+  nest-api:
+    build: 
+      context: ./nest-api
+    env_file:
+      - .env
+    depends_on: 
+      - mongo
+    ports: 
+      - "3000:3000"
+
+      
 volumes:
+  mongo-data:
   rabbitmq-data:
