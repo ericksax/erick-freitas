@@ -58,13 +58,39 @@ services:
     build: 
       context: ./nest-api
     env_file:
-      - .env
+      - ./nest-api/.env
     depends_on: 
       - mongo
     ports: 
       - "3000:3000"
 
+  frontend-dev:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - ~/.pnpm-store:/root/.pnpm-store
+    environment:
+      - NODE_ENV=development
+    command: ["pnpm", "run", "dev"]
+
+  frontend-prod:
+    build: 
+      context: ./frontend
+    container_name: frontend
+    env_file:
+      - ./frontend/.env
+    ports:
+      - "3333:80"
+    depends_on:
+      - nest-api
       
+
 volumes:
   mongo-data:
   rabbitmq-data:
