@@ -53,16 +53,20 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-    
+
   nest-api:
-    build: 
+    build:
       context: ./nest-api
     env_file:
       - ./nest-api/.env
-    depends_on: 
+    depends_on:
       - mongo
-    ports: 
+    ports:
       - "3000:3000"
+    volumes:
+      - ./nest-api:/app
+      - /app/node_modules
+      - /app/.pnpm-store
 
   frontend-dev:
     build:
@@ -74,13 +78,13 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
-      - ~/.pnpm-store:/root/.pnpm-store
+      - /app/.pnpm-store
     environment:
       - NODE_ENV=development
     command: ["pnpm", "run", "dev"]
 
   frontend-prod:
-    build: 
+    build:
       context: ./frontend
     container_name: frontend
     env_file:
@@ -89,7 +93,6 @@ services:
       - "3333:80"
     depends_on:
       - nest-api
-      
 
 volumes:
   mongo-data:
