@@ -86,6 +86,8 @@ services:
   frontend-prod:
     build:
       context: ./frontend
+      dockerfile: Dockerfile
+      target: production     
     container_name: frontend
     env_file:
       - ./frontend/.env
@@ -93,6 +95,7 @@ services:
       - "3333:80"
     depends_on:
       - nest-api
+
 
 volumes:
   mongo-data:
