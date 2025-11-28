@@ -78,7 +78,6 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
-      - /app/.pnpm-store
     environment:
       - NODE_ENV=development
     command: ["pnpm", "run", "dev"]
