@@ -57,16 +57,30 @@ services:
   nest-api:
     build:
       context: ./nest-api
+      dockerfile: Dockerfile
+      target: development
     env_file:
       - ./nest-api/.env
-    depends_on:
-      - mongo
     ports:
-      - "3000:3000"
+      - "3001:3000"
     volumes:
-      - ./nest-api:/app
       - /app/node_modules
       - /app/.pnpm-store
+    depends_on:
+      - mongo
+
+  nest-api-prod:
+    build:
+      context: ./nest-api
+      dockerfile: Dockerfile
+      target: production
+    env_file:
+      - ./nest-api/.env
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
 
   frontend-dev:
     build:
@@ -86,15 +100,14 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      target: production     
+      target: production
     container_name: frontend
     env_file:
       - ./frontend/.env
     ports:
       - "3333:80"
     depends_on:
-      - nest-api
-
+      - nest-api-prod
 
 volumes:
   mongo-data:

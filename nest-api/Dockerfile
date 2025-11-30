@@ -1,22 +1,24 @@
-FROM node:20-alpine
+FROM node:20-alpine AS base
+WORKDIR /app
 
-# Instala pnpm globalmente
+FROM base AS development
 RUN npm install -g pnpm
-
-WORKDIR /usr/src/app
-
-# Copia apenas os manifestos para aproveitar cache
-COPY pnpm-lock.yaml package.json ./
-
-# Instala dependências usando o PNPM
-RUN pnpm install --frozen-lockfile
-
-# Copia o restante do projeto
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install
 COPY . .
+CMD ["pnpm", "run", "start:dev"]
 
-# Build do NestJS
+FROM base AS build
+RUN npm install -g pnpm
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+COPY . .
 RUN pnpm run build
 
+FROM node:20-alpine AS production
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+COPY package.json .
 ENV NODE_ENV=production
-
 CMD ["node", "dist/main.js"]
