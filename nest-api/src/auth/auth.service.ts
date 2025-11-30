@@ -22,26 +22,26 @@ export class AuthService {
   }
 
   async register(dto: RegisterDto) {
-    const { email, username, password } = dto;
+    const { email, name, password } = dto;
     const exists = await this.users.findByEmail(dto.email);
 
-    if (exists) throw new UnauthorizedException('Email já existe');
+    if (exists) throw new UnauthorizedException('User already exists');
 
     const hashed = await this.hash(password);
     const user: UserDocument = await this.users.createUser({
       email,
       password: hashed,
-      name: username,
+      name,
     });
     return this.generateTokens(user);
   }
 
   async login(dto: { email: string; password: string }) {
     const user = await this.users.findByEmail(dto.email);
-    if (!user) throw new UnauthorizedException('Credenciais inválidas');
+    if (!user) throw new UnauthorizedException('Unalthorized');
 
     const match = await this.compare(dto.password, user.password);
-    if (!match) throw new UnauthorizedException('Credenciais inválidas');
+    if (!match) throw new UnauthorizedException('Unalthorized');
 
     return this.generateTokens(user);
   }
@@ -64,7 +64,7 @@ export class AuthService {
     return {
       access_token,
       refresh_token,
-      user: { email: user.email, id: user._id },
+      user: { email: user.email, name: user.name, id: user._id },
     };
   }
 
@@ -72,13 +72,13 @@ export class AuthService {
     const user = await this.users.findById(userId);
     if (!user || !user.refreshToken)
       throw new UnauthorizedException({
-        message: 'Credenciais inválidas',
+        message: 'Unalthorized',
       });
 
     const match = await this.compare(refreshToken, user.refreshToken);
     if (!match)
       throw new UnauthorizedException({
-        message: 'Credenciais inválidas',
+        message: 'Unalthorized',
       });
 
     return this.generateTokens(user);
