@@ -4,8 +4,10 @@ import tailwindcss from '@tailwindcss/vite'
 import path from "path";
 
 export default defineConfig({
-  plugins: [react(),
+  plugins: [
+    react(),
     tailwindcss(),
+
   ],
   resolve: {
     alias: {
@@ -17,6 +19,13 @@ export default defineConfig({
       usePolling: true,
     },
     host: true,
+    strictPort: true,
+  },
+   build: {
+    outDir: "dist",
+  },
+  preview: {
+    // garante que qualquer rota volte para index.html
     strictPort: true,
   }
 })

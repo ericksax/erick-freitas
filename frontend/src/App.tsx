@@ -1,15 +1,11 @@
 import './App.css'
-import { Header } from './components/header'
-import { DashboardPage } from './pages/dashboard'
-// import { LoginPage } from './pages/login'
+import { Outlet } from '@tanstack/react-router'
 
 function App() {
 
   return (
-    <div className="App bg-[#0f1217c2] min-h-screen p-8">
-      <Header/>
-      <DashboardPage />
-      {/* <LoginPage/> */}
+    <div className="flex items-center justify-center bg-[#0f1217c2] min-h-screen">
+      <Outlet />
     </div>
   )
 }

@@ -1,4 +1,3 @@
-
 FROM node:20 AS base
 WORKDIR /app
 RUN npm install -g pnpm
