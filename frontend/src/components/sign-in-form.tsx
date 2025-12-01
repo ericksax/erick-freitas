@@ -75,8 +75,6 @@ export function SignInForm() {
       form.reset();
       toast.success("Cadastro realizado com sucesso!");
 
-  
-
     } catch (error) {
     
       if ( isAxiosError(error) && error.response?.status === 409) {
