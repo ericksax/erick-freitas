@@ -8,6 +8,8 @@ import { validateEnv } from './config/validation';
 import { WeatherModule } from './weather/weather.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { AppService } from './app.service';
       }),
     }),
     WeatherModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

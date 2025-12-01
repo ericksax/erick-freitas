@@ -23,9 +23,6 @@ export class AuthService {
 
   async register(dto: RegisterDto) {
     const { email, name, password } = dto;
-    const exists = await this.users.findByEmail(dto.email);
-
-    if (exists) throw new UnauthorizedException('User already exists');
 
     const hashed = await this.hash(password);
     const user: UserDocument = await this.users.createUser({
@@ -33,6 +30,7 @@ export class AuthService {
       password: hashed,
       name,
     });
+
     return this.generateTokens(user);
   }
 
@@ -50,11 +48,11 @@ export class AuthService {
     const payload = { sub: user._id.toString(), email: user.email };
 
     const access_token = this.jwt.sign(payload, {
-      expiresIn: Number(configuration().jwt.expiresIn),
+      expiresIn: parseInt(configuration().jwt.expiresIn),
     });
 
     const refresh_token = this.jwt.sign(payload, {
-      expiresIn: Number(configuration().jwt.refreshTokenExpiresIn),
+      expiresIn: parseInt(configuration().jwt.refreshTokenExpiresIn),
       secret: configuration().jwt.refreshSecret,
     });
 
