@@ -17,7 +17,8 @@ import { Input } from "./ui/input";
 import { CardFooter } from "./ui/card";
 import { api } from "../lib/axios";
 import { toast } from "sonner";
-import { AxiosError } from "axios";
+import { isAxiosError } from "axios";
+import { useAuth } from "../contexts/auth";
 
 const formSchema = z.object({
   email: z.email({
@@ -50,6 +51,9 @@ export interface ApiErrorResponse {
 }
 
 export function SignInForm() {
+
+  const { login } = useAuth()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -61,36 +65,29 @@ export function SignInForm() {
 
   async function onSubmit(values: CreateUserRequest) {
     try {
-      const result = await api.post<CreateUserResponse>(
+      await api.post<CreateUserResponse>(
         "auth/register",
         values
       );
 
-      localStorage.setItem("dashweather@token", result.data.access_token);
-      localStorage.setItem(
-        "dashweather@refreshToken",
-        result.data.refresh_token
-      );
-      localStorage.setItem(
-        "dashweather@user",
-        JSON.stringify(result.data.user)
-      );
-
+      login( {email: values.email, password: values.password} )
+      
       form.reset();
       toast.success("Cadastro realizado com sucesso!");
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === 409) {
-          toast.error("Usuário já cadastrado!");
-          return;
-        }
 
-      
-        toast.error("Error ao cadastrar usuário!");
+  
+
+    } catch (error) {
+    
+      if ( isAxiosError(error) && error.response?.status === 409) {
+        toast.error("Usuário já cadastrado!");
+        return;
       }
+
       toast.error("Error ao cadastrar usuário!");
       console.log(error);
     }
+    
   }
 
   return (

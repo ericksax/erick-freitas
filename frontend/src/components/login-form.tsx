@@ -15,6 +15,11 @@ import {
 } from "../components/ui/form"
 import { Input } from "../components/ui/input"
 import { CardFooter } from "./ui/card"
+import { useAuth } from "../contexts/auth"
+
+import { toast } from "sonner"
+import { useNavigate } from "react-router-dom"
+import { AxiosError } from "axios"
 
 const formSchema = z.object({
   email: z.email({
@@ -26,6 +31,9 @@ const formSchema = z.object({
 })
 
 export function LoginForm() {
+  const { login } = useAuth()
+  const navigate = useNavigate()
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,9 +42,22 @@ export function LoginForm() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-    form.reset()
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      await login({ email: values.email, password: values.password })
+    
+      toast.success("Login realizado com sucesso!")
+      
+      form.reset()
+
+      navigate("/dashboard")
+    } catch (error) {
+      if(error instanceof AxiosError && error.response?.status === 401){
+        toast.error("Credenciais inválidas")
+        return
+      }
+      toast.error("Ocorreu um erro ao fazer login, verifique suas credenciais.")
+    }
   }
 
   return (

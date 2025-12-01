@@ -1,10 +1,10 @@
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
 import { LoginForm } from "../components/login-form"
-import { Link } from "@tanstack/react-router"
+import { Link } from "react-router-dom"
 
-export function LoginPage() {
+export function Login() {
   return (
-    <main className="flex flex-col w-full items-center gap-16">
+    <main className="flex flex-col w-full items-center h-screen gap-16 pt-32">
       <div className="text-emerald-500 font-bold text-3xl">
         Dash.Weather
       </div>
