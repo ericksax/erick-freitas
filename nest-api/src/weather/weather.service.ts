@@ -6,7 +6,8 @@ import {
   Weather,
   WeatherDocument,
 } from './schemas/weather.schema/weather.schema';
-import { CreateWeatherDto } from './dto/create-weather.dto/create-weather.dto';
+import { CreateWeatherDto } from './dto/create-weather.dto';
+import { WeatherMapper } from './weather-mapper';
 
 @Injectable()
 export class WeatherService {
@@ -15,11 +16,8 @@ export class WeatherService {
   ) {}
 
   async create(dto: CreateWeatherDto): Promise<Weather> {
-    const created = new this.weatherModel({
-      ...dto,
-      observed_at: new Date(dto.observed_at),
-    });
-    return created.save();
+    const data = WeatherMapper.fromDto(dto);
+    return this.weatherModel.create(data);
   }
 
   async findAll(): Promise<Weather[]> {

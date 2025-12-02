@@ -3,41 +3,80 @@ import { Document } from 'mongoose';
 
 export type WeatherDocument = Weather & Document;
 
-@Schema({ timestamps: true })
+@Schema()
 export class Weather {
   @Prop({ required: true })
   source: string;
 
-  @Prop({ type: Object, required: true })
+  @Prop({
+    type: {
+      city: { type: String, required: false },
+      latitude: Number,
+      longitude: Number,
+    },
+  })
   location: {
-    city?: string;
+    city?: string | null;
     latitude: number;
     longitude: number;
   };
 
-  @Prop({ required: true })
+  @Prop({ type: Date, required: true })
   observed_at: Date;
 
-  @Prop()
-  temperature_c?: number;
+  // ------------- CURRENT ----------------
+  @Prop({
+    type: {
+      time: String,
+      temp: Number,
+      windspeed: Number,
+      winddirection: Number,
+      humidity: Number,
+      cloud: Number,
+      rain: Number,
+    },
+  })
+  current: {
+    time: string;
+    temp: number;
+    windspeed: number;
+    winddirection: number;
+    humidity: number | null;
+    cloud: number | null;
+    rain: number | null;
+  };
 
-  @Prop()
-  humidity_percent?: number;
+  // ------------- HOURLY FORECAST ----------------
+  @Prop([
+    {
+      time: String,
+      temp: Number,
+      humidity: Number,
+      cloud: Number,
+      rain: Number,
+    },
+  ])
+  forecast_hourly: Array<{
+    time: string;
+    temp: number;
+    humidity: number;
+    cloud: number;
+    rain: number;
+  }>;
 
-  @Prop()
-  wind_speed_m_s?: number;
-
-  @Prop()
-  wind_direction_deg?: number;
-
-  @Prop()
-  cloud_cover_percent?: number;
-
-  @Prop()
-  precipitation_probability?: number;
-
-  @Prop({ type: Object })
-  raw?: Record<string, any>;
+  // ------------- DAILY FORECAST ----------------
+  @Prop([
+    {
+      date: String,
+      min: Number,
+      max: Number,
+    },
+  ])
+  forecast_daily: Array<{
+    date: string;
+    min: number;
+    max: number;
+  }>;
 }
 
 export const WeatherSchema = SchemaFactory.createForClass(Weather);

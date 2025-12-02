@@ -133,7 +133,7 @@ export function SignInForm() {
           )}
         />
         <CardFooter>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full bg-emerald-500 hover:cursor-pointer hover:bg-emerald-600">
             Cadastrar
           </Button>
         </CardFooter>

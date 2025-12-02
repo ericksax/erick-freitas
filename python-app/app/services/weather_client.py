@@ -28,7 +28,9 @@ class WeatherClient:
             "latitude": self.settings.latitude,
             "longitude": self.settings.longitude,
             "current_weather": "true",
-            "hourly": "relativehumidity_2m,precipitation_probability,cloudcover",
+            "hourly": "temperature_2m,relativehumidity_2m,precipitation_probability,cloudcover",
+            "daily": "temperature_2m_max,temperature_2m_min",
+            "timezone": "GMT",
         }
 
         async with httpx.AsyncClient(timeout=20.0) as client:

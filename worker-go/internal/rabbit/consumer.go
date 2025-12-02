@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"worker-go/internal/models"
+	"worker-go/internal/mapper"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )
@@ -69,22 +70,22 @@ func Consume(conn *amqp.Connection, handler MessageHandler) error {
 
 	// ✅ Loop de consumo
 	for msg := range msgs {
-		var data models.WeatherPayload
-
-		if err := json.Unmarshal(msg.Body, &data); err != nil {
-			log.Println("⚠️  Erro ao decodificar JSON:", err)
+		var incoming models.IncomingWeather
+		if err := json.Unmarshal(msg.Body, &incoming); err != nil {
 			msg.Nack(false, false)
 			continue
 		}
 
-		if err := handler(data); err != nil {
-			log.Println("⚠️  Erro ao processar mensagem:", err)
+		payload := mapper.ToWeatherPayload(incoming)
+
+		if err := handler(payload); err != nil {
 			msg.Nack(false, true)
 			continue
 		}
 
 		msg.Ack(false)
-	}
+
+		}
 
 	return nil
 }
