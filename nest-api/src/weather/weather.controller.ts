@@ -23,4 +23,14 @@ export class WeatherController {
       data,
     };
   }
+
+  @Get('last')
+  async getLast() {
+    const data = await this.weatherService.findLastOne();
+    return {
+      message: 'Last log retrieved successfully',
+      success: true,
+      data,
+    };
+  }
 }

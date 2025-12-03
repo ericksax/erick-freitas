@@ -56,6 +56,11 @@ export function LoginForm() {
         toast.error("Credenciais inválidas")
         return
       }
+
+      if(error instanceof AxiosError && error.response?.status === 404) {
+        toast.error("Usuário não existe")
+        return
+      }
       toast.error("Ocorreu um erro ao fazer login, verifique suas credenciais.")
     }
   }

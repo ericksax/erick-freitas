@@ -23,4 +23,8 @@ export class WeatherService {
   async findAll(): Promise<Weather[]> {
     return this.weatherModel.find().sort({ observed_at: -1 }).limit(500).lean();
   }
+
+  findLastOne(): Promise<Weather> {
+    return this.weatherModel.findOne().sort({ observed_at: -1 }).lean();
+  }
 }
