@@ -6,11 +6,13 @@ import {
   Weather,
   WeatherSchema,
 } from './schemas/weather.schema/weather.schema';
+import { AIModule } from 'src/ai/ai.module';
 
 @Module({
   controllers: [WeatherController],
   providers: [WeatherService],
   imports: [
+    AIModule,
     MongooseModule.forFeature([{ name: Weather.name, schema: WeatherSchema }]),
   ],
 })

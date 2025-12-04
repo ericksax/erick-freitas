@@ -33,4 +33,9 @@ export class WeatherController {
       data,
     };
   }
+
+  @Get('insights')
+  async insights() {
+    return await this.weatherService.generateInsights();
+  }
 }
