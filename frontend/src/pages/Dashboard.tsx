@@ -27,10 +27,10 @@ export function Dashboard() {
   const weather = result.data;
 
   return (
-    <div className="h-screen w-full">
+    <div className="min-h-screen w-full">
       <Header />
-      <main className="pt-40 h-[calc(100vh-130px)] rounded-2xl p-8">
-        <div className="h-full w-full flex flex-col gap-8">
+      <main className="pt-40 min-h-screen rounded-2xl p-8">
+        <div className="h-full w-full flex flex-1 flex-col gap-8">
           <div className="flex flex-col lg:flex-row min-w-full gap-8">
             <CurrentDayCard
               key={weather.current?._id}
@@ -44,7 +44,7 @@ export function Dashboard() {
             </div>
           </div>
 
-          <div className="flex items-center justify-center h-full bg-[#1A1D23] w-full rounded-2xl">
+          <div className="flex flex-1 min-h-80 items-center justify-center h-full bg-[#1A1D23] w-full rounded-2xl">
             Juiz de Fora
           </div>
         </div>
