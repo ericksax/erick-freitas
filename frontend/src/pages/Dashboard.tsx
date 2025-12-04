@@ -6,6 +6,7 @@ import { ForecastDayCard } from "../components/forecast-day-card";
 import { Header } from "../components/header";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/axios";
+import { TemperatureHumidityChart } from "../components/charts/temperature-humidity-chart";
 
 export interface WeatherApiResponse {
   message: string;
@@ -40,15 +41,17 @@ export function Dashboard() {
             <div className="flex flex-1 flex-wrap justify-center gap-4">
               {weather.forecast_daily.slice(2, 6).map((day) => (
                 <ForecastDayCard key={day._id} {...day} />
-              ))}    
+              ))}
             </div>
           </div>
 
-          <div className="flex items-center justify-center h-full bg-[#1A1D23] w-full rounded-2xl">
-            Juiz de Fora
+          <div className="flex flex-col md:flex-row h-full w-full gap-8">
+            <div className="flex-1 flex flex-col bg-[#1A1D23] rounded-2xl p-4">
+              <TemperatureHumidityChart data={weather.forecast_hourly} />
+            </div>
           </div>
         </div>
       </main>
     </div>
   );
-}
+}  
