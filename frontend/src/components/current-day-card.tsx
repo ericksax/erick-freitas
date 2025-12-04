@@ -1,8 +1,10 @@
 import {
+  CalendarDays,
   Cloud,
   CloudRain,
   Compass,
   Droplets,
+  MapPin,
   Thermometer,
   Wind,
 } from "lucide-react";
@@ -99,8 +101,12 @@ export function CurrentDayCard({ current }: CurrentDayCardProps) {
 
   return (
     <div className="flex flex-col gap-4 bg-[#1A1D23] w-full lg:w-[40%] rounded-2xl p-4 sm:p-6">
-      <div className="text-center">
-        <strong className="font-semibold text-lg">
+      <div className="flex items-center justify-between flex-wrap">
+        <div className="flex items-center gap-2">
+            <MapPin className="text-red-400 h-6 w-4" />
+            <strong className="font-semibold text-lg">Juiz de Fora - MG </strong></div>
+        <span className="flex items-center gap-2">
+            <CalendarDays className="text-gray-300 w-4 h-4"/>
           {current?.time
             ? new Intl.DateTimeFormat("pt-br", {
                 weekday: "long",
@@ -108,7 +114,7 @@ export function CurrentDayCard({ current }: CurrentDayCardProps) {
                 month: "long",
               }).format(new Date(current.time))
             : "..."}
-        </strong>
+        </span>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
