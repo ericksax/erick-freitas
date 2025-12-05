@@ -12,6 +12,10 @@ class EnvironmentVariables {
   JWT_SECRET: string;
 
   @IsString()
+  @IsNotEmpty()
+  GEMINI_API_KEY: string;
+
+  @IsString()
   @IsOptional()
   JWT_EXPIRES_IN?: string;
 
