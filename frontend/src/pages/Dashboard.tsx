@@ -7,6 +7,7 @@ import { Header } from "../components/header";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/axios";
 import { TemperatureHumidityChart } from "../components/charts/temperature-humidity-chart";
+import { AiInsights } from "@/components/ai-insights";
 
 export interface WeatherApiResponse {
   message: string;
@@ -45,12 +46,13 @@ export function Dashboard() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row h-full w-full gap-8">
-            <div className="flex-1 flex flex-col bg-[#1A1D23] rounded-2xl p-4">
+          
+            <div className="flex-1 flex bg-[#1A1D23] rounded-2xl p-4 items-center">
               <TemperatureHumidityChart data={weather.forecast_hourly} />
+              <AiInsights/>
             </div>
           </div>
-        </div>
+        
       </main>
     </div>
   );
