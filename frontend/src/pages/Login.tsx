@@ -15,7 +15,7 @@ export function Login() {
             Entre com seu email para fazer login na sua conta.
           </CardDescription>
           <CardAction>
-            <Link to="/sign-in" className="underline font-bold">Sign Up</Link>
+            <Link to="/sign-in" className="underline font-bold">Cadastre</Link>
           </CardAction>
         </CardHeader>
         <CardContent>
