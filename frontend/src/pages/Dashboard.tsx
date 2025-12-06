@@ -22,34 +22,36 @@ export function Dashboard() {
       api.get<WeatherApiResponse>("/weather/last").then((res) => res.data),
   });
 
-  if (isLoading) return <p>Carregando...</p>;
-  if (error) return <p>Erro ao buscar clima</p>;
-  if (!result?.data) return <p>Nenhum dado encontrado</p>;
+  if (isLoading) return <div className="h-screen flex justify-center items-center"><p>Carregando...</p></div>;
+  if (error) return <div className="h-screen flex justify-center items-center"><p>Erro ao buscar clima</p></div>;
+  if (!result?.data) return <div className="h-screen flex justify-center items-center"><p>Nenhum dado encontrado</p></div>;
 
   const weather = result.data;
 
   return (
     <div className="min-h-screen w-full">
       <Header />
-      <main className="pt-40 min-h-screen rounded-2xl p-8">
-        <div className="h-full w-full flex flex-1 flex-col gap-8">
-          <div className="flex flex-col lg:flex-row min-w-full gap-8">
-            <CurrentDayCard
-              key={weather.current?._id}
-              current={weather.current}
-            />
+      <main className="min-h-screen rounded-2xl pt-[140px] md:pt-[172px]">
+        <div className="max-w-[1440px] mx-auto p-4 md:p-8">
+          <div className="h-full w-full flex flex-1 flex-col gap-4">
+            <div className="flex flex-col lg:flex-row min-w-full gap-4">
+              <CurrentDayCard
+                key={weather.current?._id}
+                current={weather.current}
+              />
 
-            <div className="flex flex-1 flex-wrap justify-center gap-4">
-              {weather.forecast_daily.slice(2, 6).map((day) => (
-                <ForecastDayCard key={day._id} {...day} />
-              ))}
+              <div className="flex flex-1 flex-wrap justify-center gap-4">
+                {weather.forecast_daily.slice(2, 6).map((day) => (
+                  <ForecastDayCard key={day._id} {...day} />
+                ))}
+              </div>
             </div>
-          </div>
 
-          
-            <div className="flex-1 flex bg-[#1A1D23] rounded-2xl p-4 items-center">
-              <TemperatureHumidityChart data={weather.forecast_hourly} />
-              <AiInsights/>
+            
+              <div className="flex-1 flex-col lg:flex-row flex-wrap flex bg-[#1A1D23] rounded-2xl p-2 md:p-4 items-center">
+                <TemperatureHumidityChart data={weather.forecast_hourly} />
+                <AiInsights/>
+              </div>
             </div>
           </div>
         

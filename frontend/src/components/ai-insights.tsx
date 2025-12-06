@@ -12,17 +12,24 @@ export function AiInsights() {
   }>({
     queryKey: ["insights"],
     queryFn: async () =>
-      await api.get("weather/insights").then((res) => res.data),
+      await api.get("weather/insights").then((res) => {
+        console.log(res.data)
+        return res.data
+      }),
+      refetchInterval: 60 * 1000 * 60 * 12,
+      staleTime: 60 * 1000 * 60 * 12,
   });
 
   return (
-    <main className="flex flex-col w-full max-w-[50%] h-full px-8 gap-4">
-      <div className="flex gap-2 mb-8 w-full justify-between">
+    <main className="flex flex-1 flex-col justify-around w-full h-full px-4 md:px-8 gap-4">
+      <div className="flex gap-2 flex-col sm:flex-row mb-8 w-full justify-around">
         <div className="flex gap-2 items-center ">
           <Sparkles />
-          <strong>AI Insights</strong>
+          <strong className="text-md md:text-xl">AI Insights</strong>
         </div>
+       
         <p className="text-sm text-gray-400">Alertas e dicas gerados por inteligência artificial.</p>
+  
       </div>
     
       {isLoading ? (

@@ -89,7 +89,7 @@ export function EditUserModal({ user, isOpen, onClose }: EditUserModalProps) {
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="bg-[#1A1D23] border-slate-700 text-white">
+            <DialogContent className="bg-[#1A1D23] border text-white">
                 {user && (
                     <>
                         <DialogHeader>

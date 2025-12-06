@@ -15,7 +15,9 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <App />
+        <div className="w-full max-w-[1440px] mx-auto">
+          <App />
+        </div>
         <Toaster />
       </AuthProvider>
       </QueryClientProvider>

@@ -37,7 +37,7 @@ export function TemperatureHumidityChart({ data }: TemperatureHumidityChartProps
   const ticks = formattedData.filter((_, index) => index % 4 === 0).map(item => item.time);
 
   return (
-    <Card className="flex-1 max-w-[50%] border-0">
+    <Card className="flex-1 w-full border-0">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <ChartLine className="w-4 h-6 text-gray-300"/>
@@ -53,7 +53,7 @@ export function TemperatureHumidityChart({ data }: TemperatureHumidityChartProps
             data={formattedData}
             margin={{
               top: 10,
-              right: 30,
+              right: 10,
               left: 0,
               bottom: 0,
             }}
