@@ -5,6 +5,7 @@ import { PublicRoute } from "./routes/public-route";
 import { SignIn } from "./pages/SignIn";
 import { Login } from "./pages/Login";
 import { Dashboard } from "./pages/Dashboard";
+import { Users } from "./pages/users";
 
 
 function App() {
@@ -13,12 +14,12 @@ function App() {
      <Router>
       <Routes> 
         <Route path="/" element={<Navigate  to="/login" replace />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/sign-in" element={<SignIn />}/> 
         <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/users" element={<Users />} />
         </Route>
         <Route element={<PublicRoute />}>
+        <Route path="/sign-in" element={<SignIn />}/> 
           <Route path="/login" element={<Login />} />
         </Route>
           <Route path="*" element={<Navigate to="/" replace />} />

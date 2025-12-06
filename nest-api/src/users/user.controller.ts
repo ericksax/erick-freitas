@@ -2,7 +2,7 @@ import { Put, Controller, Param, Body, Delete, Get } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserUpdateDto } from './dto/update-user.dto';
 
-@Controller('/user')
+@Controller('/users')
 export class UserController {
   constructor(private useService: UsersService) {}
 

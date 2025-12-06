@@ -19,6 +19,7 @@ import { api } from "../lib/axios";
 import { toast } from "sonner";
 import { isAxiosError } from "axios";
 import { useAuth } from "../contexts/auth";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
   email: z.email({
@@ -50,9 +51,14 @@ export interface ApiErrorResponse {
   error: string;
 }
 
-export function SignInForm() {
+const createUser = async (newUserData: CreateUserRequest) => {
+  const { data } = await api.post<CreateUserResponse>("auth/register", newUserData);
+  return data;
+};
 
-  const { login } = useAuth()
+export function SignInForm() {
+  const { login } = useAuth();
+  const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,29 +69,27 @@ export function SignInForm() {
     },
   });
 
-  async function onSubmit(values: CreateUserRequest) {
-    try {
-      await api.post<CreateUserResponse>(
-        "auth/register",
-        values
-      );
-
-      login( {email: values.email, password: values.password} )
-      
+  const { mutate } = useMutation({
+    mutationFn: createUser,
+    onSuccess: (_data, variables) => {
+      login({ email: variables.email, password: variables.password });
       form.reset();
       toast.success("Cadastro realizado com sucesso!");
-
-    } catch (error) {
-    
-      if ( isAxiosError(error) && error.response?.status === 409) {
+      // Invalida a query 'users' para que a lista seja atualizada
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+    onError: (error) => {
+      if (isAxiosError(error) && error.response?.status === 409) {
         toast.error("Usuário já cadastrado!");
         return;
       }
+      toast.error("Erro ao cadastrar usuário!");
+      console.error(error);
+    },
+  });
 
-      toast.error("Error ao cadastrar usuário!");
-      console.log(error);
-    }
-    
+  async function onSubmit(values: CreateUserRequest) {
+    mutate(values);
   }
 
   return (

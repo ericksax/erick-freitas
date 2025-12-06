@@ -38,13 +38,16 @@ export const AuthProvider = ({ children }: {children: ReactNode}) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("dashweather@token");
-    const storedUser = localStorage.getItem("dashweather@user");
-    if (token && storedUser) {
-      setIsAuthenticated(true);
-      setUser(JSON.parse(storedUser));
-    }
-    setIsLoading(false);
+    const initializeAuth = () => {
+      const token = localStorage.getItem("dashweather@token");
+      const storedUser = localStorage.getItem("dashweather@user");
+      if (token && storedUser) {
+        setIsAuthenticated(true);
+        setUser(JSON.parse(storedUser));
+      }
+      setIsLoading(false);
+    };
+    initializeAuth();
   }, []);
 
   const login = async({ email, password }: AuthRequest) => {
