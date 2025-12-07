@@ -2,9 +2,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 
 import { ProtectedRoute } from "./routes/protected-route";
 import { PublicRoute } from "./routes/public-route";
-import { SignIn } from "./pages/SignIn";
-import { Login } from "./pages/Login";
-import { Dashboard } from "./pages/Dashboard";
+import { SignIn } from "./pages/signIn";
+import { Login } from "./pages/login";
+import { Dashboard } from "./pages/dashboard";
 import { Users } from "./pages/users";
 
 

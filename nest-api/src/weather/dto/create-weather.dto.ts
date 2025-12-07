@@ -1,4 +1,4 @@
-import { Type, Transform } from "class-transformer";
+import { Type, Transform } from 'class-transformer';
 import {
   IsArray,
   IsDateString,
@@ -8,11 +8,8 @@ import {
   IsOptional,
   IsString,
   ValidateNested,
-} from "class-validator";
+} from 'class-validator';
 
-// --------------------
-// LOCATION
-// --------------------
 export class LocationDto {
   @IsOptional()
   @IsString()
@@ -29,9 +26,6 @@ export class LocationDto {
   longitude: number;
 }
 
-// --------------------
-// CURRENT WEATHER
-// --------------------
 export class CurrentWeatherDto {
   @IsString()
   time: string;
@@ -49,9 +43,6 @@ export class CurrentWeatherDto {
   winddirection: number;
 }
 
-// --------------------
-// HOURLY
-// --------------------
 export class HourlyDto {
   @IsArray()
   @IsString({ each: true })
@@ -74,9 +65,6 @@ export class HourlyDto {
   precipitation_probability: number[];
 }
 
-// --------------------
-// DAILY
-// --------------------
 export class DailyDto {
   @IsArray()
   @IsString({ each: true })
@@ -91,9 +79,6 @@ export class DailyDto {
   temperature_2m_max: number[];
 }
 
-// --------------------
-// ROOT DTO
-// --------------------
 export class CreateWeatherDto {
   @IsString()
   source: string;

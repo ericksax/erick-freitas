@@ -17,8 +17,14 @@ RUN pnpm run build
 
 FROM node:20-alpine AS production
 WORKDIR /app
+
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
 COPY package.json .
+
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
 ENV NODE_ENV=production
-CMD ["node", "dist/main.js"]
+
+ENTRYPOINT ["/app/entrypoint.sh"]

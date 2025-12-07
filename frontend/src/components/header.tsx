@@ -9,6 +9,17 @@ export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDownloadsOpen, setIsDownloadsOpen] = useState(false); // New state for downloads
 
+
+  function handleDownload(tipe: string) {
+
+    if(tipe === "xlsx") {
+      window.location.href = "http://localhost:8000/api/download/xlsx"
+      return
+    }
+
+    window.location.href = "http://localhost:8000/api/download/csv"
+  }
+
   return (
     <header className="fixed top-0 left-0 right-0 p-4 md:p-8 m-auto w-full max-w-[1440px] flex items-center justify-center bg-translucent z-10">
       <div className="flex items-center justify-between w-full space-x-4 bg-[rgba(26,29,35,0.92)] border p-4 md:p-8 rounded-2xl h-24 relative">
@@ -53,8 +64,8 @@ export const Header = () => {
             </button>
             {isDownloadsOpen && (
               <div className="flex flex-col w-full items-center space-y-2">
-                <button className="w-full text-center p-2 rounded hover:bg-gray-700">Extrair dados em CSV</button>
-                <button className="w-full text-center p-2 rounded hover:bg-gray-700">Extrair dados em XLSX</button>
+                <button onSelect={() => handleDownload("csv")} className="w-full text-center p-2 rounded hover:bg-gray-700">Extrair dados em CSV</button>
+                <button onSelect={() => handleDownload("xlsx")} className="w-full text-center p-2 rounded hover:bg-gray-700">Extrair dados em XLSX</button>
               </div>
             )}
 

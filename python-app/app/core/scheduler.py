@@ -44,7 +44,6 @@ class Scheduler:
                 log.info("Cycle completed")
             except Exception as e:
                 log.exception("Error in scheduler cycle: %s", e)
-                # wait or until stop
             try:
                 await asyncio.wait_for(
                     self._stop_event.wait(), timeout=settings.interval_seconds
@@ -59,7 +58,6 @@ class Scheduler:
         await self._publisher.publish(normalized)
 
 
-# helper to access scheduler instance from routes
 _scheduler_instance: Scheduler | None = None
 
 

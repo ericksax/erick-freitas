@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { Toaster } from './components/ui/sonner'
 import { AuthProvider } from './contexts/auth'
 import { QueryClientProvider } from '@tanstack/react-query'
-import App from './App'
+import App from './app'
 
 import './index.css';
 import { queryClient } from './lib/query-client'

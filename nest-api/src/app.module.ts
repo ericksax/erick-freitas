@@ -10,6 +10,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { DownloadModule } from './download/download.module';
 import { AIModule } from './ai/ai.module';
 
 @Module({
@@ -28,6 +29,7 @@ import { AIModule } from './ai/ai.module';
     AuthModule,
     UsersModule,
     AIModule,
+    DownloadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

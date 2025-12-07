@@ -16,6 +16,17 @@ import {
 import { Link } from "react-router-dom"
 
 export function NavBar() {
+
+  function handleDownload(tipe: string) {
+
+    if(tipe === "xlsx") {
+      window.location.href = "http://localhost:3001/api/download/xlsx"
+      return
+    }
+
+    window.location.href = "http://localhost:3001/api/download/csv"
+  }
+
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -34,8 +45,8 @@ export function NavBar() {
               <ChevronDownIcon />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="bg-[#1A1D23] ">
-              <DropdownMenuItem className="hover:cursor-pointer">Extrair dados em CSV</DropdownMenuItem>
-              <DropdownMenuItem className="hover:cursor-pointer"> Extrair dados em XLSX</DropdownMenuItem>
+              <DropdownMenuItem onClick={()=> handleDownload("csv")} className="hover:cursor-pointer">Extrair dados em CSV</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleDownload("xlsx")} className="hover:cursor-pointer"> Extrair dados em XLSX</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </BreadcrumbItem>

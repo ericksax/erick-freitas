@@ -31,7 +31,7 @@ export function Dashboard() {
   return (
     <div className="min-h-screen w-full">
       <Header />
-      <main className="min-h-screen rounded-2xl pt-[140px] md:pt-[172px]">
+      <main className="min-h-screen rounded-2xl pt-[140px] md:pt-28">
         <div className="max-w-[1440px] mx-auto p-4 md:p-8">
           <div className="h-full w-full flex flex-1 flex-col gap-4">
             <div className="flex flex-col lg:flex-row min-w-full gap-4">
@@ -44,6 +44,7 @@ export function Dashboard() {
                 {weather.forecast_daily.slice(2, 6).map((day) => (
                   <ForecastDayCard key={day._id} {...day} />
                 ))}
+                
               </div>
             </div>
 
