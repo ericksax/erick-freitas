@@ -1,5 +1,5 @@
 import { Sun, Thermometer } from "lucide-react";
-import { WeatherDaily } from "./current-day-card";
+import { WeatherDaily } from "../types/weather";
 
 export function ForecastDayCard({ date, min, max }: WeatherDaily) {
   return (

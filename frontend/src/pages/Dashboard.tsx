@@ -1,13 +1,15 @@
 import {
   CurrentDayCard,
-  WeatherDocument,
-} from "../components/current-day-card";
-import { ForecastDayCard } from "../components/forecast-day-card";
+
+} from "../features/weather/componentes/current-day-card";
+import { ForecastDayCard } from "../features/weather/componentes/forecast-day-card";
 import { Header } from "../components/header";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/axios";
 import { TemperatureHumidityChart } from "../components/charts/temperature-humidity-chart";
-import { AiInsights } from "@/components/ai-insights";
+import { WeatherDocument } from "@/features/weather/types/weather";
+import { AiInsights } from "@/features/weather/componentes/ai-insights";
+
 
 export interface WeatherApiResponse {
   message: string;

@@ -17,7 +17,6 @@ async def health():
 
 @router.post("/trigger")
 async def trigger():
-    """Manual trigger: calls scheduler to execute one collection immediately."""
     scheduler = get_scheduler()
     if not scheduler:
         raise HTTPException(status_code=500, detail="Scheduler not initialized")

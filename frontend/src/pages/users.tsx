@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { UserCard } from "@/components/user-card";
-import { DeleteUserModal } from "@/components/delete-user-modal";
-import { EditUserModal } from "@/components/edit-user-modal"; // Importar o novo modal
+import { UserCard } from "@/features/users/components/user-card";
+import { DeleteUserModal } from "@/features/users/components/delete-user-modal";
+import { EditUserModal } from "@/features/users/components/edit-user-modal"; // Importar o novo modal
 import { api } from "@/lib/axios";
 import { ArrowLeftIcon} from "lucide-react";
 import { Link } from "react-router-dom";

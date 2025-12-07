@@ -1,55 +1,18 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
-import { Button } from "./ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
-import { CardFooter } from "./ui/card";
-import { api } from "../lib/axios";
 import { toast } from "sonner";
 import { isAxiosError } from "axios";
-import { useAuth } from "../contexts/auth";
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@/contexts/auth";
+import { CardFooter } from "@/components/ui/card";
+import { api } from "@/lib/axios";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { CreateUserRequest, CreateUserResponse, signInFormSchema, SignInRequest } from "../types/auth";
 
-const formSchema = z.object({
-  email: z.email({
-    message: "Please enter a valid email.",
-  }),
-  name: z.string().min(3, {
-    message: "Name must be at least 3 characters.",
-  }),
-  password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
-  }),
-});
-
-type CreateUserRequest = z.infer<typeof formSchema>;
-
-interface CreateUserResponse {
-  access_token: string;
-  refresh_token: string;
-  user: {
-    email: string;
-    name: string;
-    id: string;
-  };
-}
-
-export interface ApiErrorResponse {
-  statusCode: number;
-  message: string | string[];
-  error: string;
-}
 
 const createUser = async (newUserData: CreateUserRequest) => {
   const { data } = await api.post<CreateUserResponse>("auth/register", newUserData);
@@ -60,8 +23,8 @@ export function SignInForm() {
   const { login } = useAuth();
   const queryClient = useQueryClient();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SignInRequest>({
+    resolver: zodResolver(signInFormSchema),
     defaultValues: {
       email: "",
       password: "",

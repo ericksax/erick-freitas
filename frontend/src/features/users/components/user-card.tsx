@@ -1,18 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash } from "lucide-react";
+import { UserCardProps } from "../types/user";
 
-interface User {
-    _id: string;
-    name: string;
-    email: string;
-}
-
-interface UserCardProps {
-    user: User;
-    onDelete: (user: User) => void;
-    onEdit: (user: User) => void;
-}
 
 export function UserCard({ user, onDelete, onEdit }: UserCardProps) {
     return (

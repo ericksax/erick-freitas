@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts"
-import { ForecastHourly } from "../current-day-card"
+
 import {
   Card,
   CardContent,
@@ -17,6 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { ChartLine } from "lucide-react";
+import { ForecastHourly } from "@/features/weather/types/weather";
 
 interface TemperatureHumidityChartProps {
   data: ForecastHourly[];

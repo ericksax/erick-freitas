@@ -8,38 +8,16 @@ import {
 } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Button } from "./ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
-import { Input } from "./ui/input";
+import { Button } from "../../../components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../components/ui/form";
+import { Input } from "../../../components/ui/input";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/axios";
 import { toast } from "sonner";
 import { isAxiosError } from "axios";
 import { useEffect } from "react";
+import { editFormSchema, EditUserModalProps, EditUserRequest } from "../types/user";
 
-// Define the shape of a user object
-export interface User {
-    _id: string;
-    name: string;
-    email: string;
-}
-
-// Form validation schema
-const formSchema = z.object({
-  name: z.string().min(3, { message: "Name must be at least 3 characters." }),
-  email: z.email({ message: "Please enter a valid email." }),
-});
-
-type EditUserRequest = z.infer<typeof formSchema>;
-
-interface EditUserModalProps {
-    user: User | null;
-    isOpen: boolean;
-    onClose: () => void;
-}
-
-// The API call function
 const updateUser = async ({ _id, ...data }: EditUserRequest & { _id: string }) => {
     await api.put(`/users/${_id}`, data);
 };
@@ -48,7 +26,7 @@ export function EditUserModal({ user, isOpen, onClose }: EditUserModalProps) {
     const queryClient = useQueryClient();
 
     const form = useForm<EditUserRequest>({
-        resolver: zodResolver(formSchema),
+        resolver: zodResolver(editFormSchema),
         defaultValues: {
             name: "",
             email: "",

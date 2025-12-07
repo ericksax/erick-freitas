@@ -1,4 +1,5 @@
 
+import { ForecastHourly } from "@/features/weather/types/weather";
 import {
   CartesianGrid,
   Line,
@@ -8,7 +9,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { ForecastHourly } from "../current-day-card";
 
 interface TemperatureChartProps {
   data: ForecastHourly[];
