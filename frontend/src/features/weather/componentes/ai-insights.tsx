@@ -1,8 +1,9 @@
 import { AlertCircleIcon, Megaphone, Sparkles } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/axios";
 import { WeatherAlertsSkeleton } from "./weather-alerts-skeleton";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export function AiInsights() {
   const { data, isLoading } = useQuery<{

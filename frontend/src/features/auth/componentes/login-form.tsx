@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { Button } from "../components/ui/button"
+import { Button } from "../../../components/ui/button"
 import {
   Form,
   FormControl,
@@ -12,21 +12,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../components/ui/form"
-import { Input } from "../components/ui/input"
-import { CardFooter } from "./ui/card"
-import { useAuth } from "../contexts/auth"
+} from "../../../components/ui/form"
+import { Input } from "../../../components/ui/input"
+import { CardFooter } from "../../../components/ui/card"
+import { useAuth } from "../../../contexts/auth"
 
 import { toast } from "sonner"
 import { useNavigate } from "react-router-dom"
 import { AxiosError } from "axios"
+import { AuthRequest } from "../types/auth"
 
-const formSchema = z.object({
+const loginFormSchema = z.object({
   email: z.email({
-    message: "Please enter a valid email.",
+    message: "Por favor insira um email válido.",
   }),
   password: z.string().min(6, {
-    message: "Password must be at least 8 characters.",
+    message: "A Senha deve ter no mínimo 6 caracteres",
   }),
 })
 
@@ -34,15 +35,15 @@ export function LoginForm() {
   const { login } = useAuth()
   const navigate = useNavigate()
   
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<AuthRequest>({
+    resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: AuthRequest) {
     try {
       await login({ email: values.email, password: values.password })
     

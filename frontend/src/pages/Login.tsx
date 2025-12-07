@@ -1,5 +1,5 @@
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
-import { LoginForm } from "../components/login-form"
+import { LoginForm } from "../features/auth/componentes/login-form"
 import { Link } from "react-router-dom"
 
 export function Login() {

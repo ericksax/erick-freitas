@@ -11,6 +11,7 @@ import { AIModule } from 'src/ai/ai.module';
 @Module({
   controllers: [WeatherController],
   providers: [WeatherService],
+  exports: [WeatherService],
   imports: [
     AIModule,
     MongooseModule.forFeature([{ name: Weather.name, schema: WeatherSchema }]),

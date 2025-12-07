@@ -1,13 +1,15 @@
 import {
   CurrentDayCard,
-  WeatherDocument,
-} from "../components/current-day-card";
-import { ForecastDayCard } from "../components/forecast-day-card";
+
+} from "../features/weather/componentes/current-day-card";
+import { ForecastDayCard } from "../features/weather/componentes/forecast-day-card";
 import { Header } from "../components/header";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/axios";
 import { TemperatureHumidityChart } from "../components/charts/temperature-humidity-chart";
-import { AiInsights } from "@/components/ai-insights";
+import { WeatherDocument } from "@/features/weather/types/weather";
+import { AiInsights } from "@/features/weather/componentes/ai-insights";
+
 
 export interface WeatherApiResponse {
   message: string;
@@ -31,7 +33,7 @@ export function Dashboard() {
   return (
     <div className="min-h-screen w-full">
       <Header />
-      <main className="min-h-screen rounded-2xl pt-[140px] md:pt-[172px]">
+      <main className="min-h-screen rounded-2xl pt-[140px] md:pt-28">
         <div className="max-w-[1440px] mx-auto p-4 md:p-8">
           <div className="h-full w-full flex flex-1 flex-col gap-4">
             <div className="flex flex-col lg:flex-row min-w-full gap-4">
@@ -44,6 +46,7 @@ export function Dashboard() {
                 {weather.forecast_daily.slice(2, 6).map((day) => (
                   <ForecastDayCard key={day._id} {...day} />
                 ))}
+                
               </div>
             </div>
 

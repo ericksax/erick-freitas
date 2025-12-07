@@ -2,9 +2,7 @@ import logging
 import httpx
 from typing import Any
 
-
 from ..core.config import settings
-
 
 log = logging.getLogger("weather_client")
 
@@ -14,6 +12,7 @@ class WeatherClient:
         self.settings = settings
 
     async def fetch(self) -> Any:
+        
         provider = self.settings.weather_provider.lower()
         if provider == "open-meteo":
             return await self._fetch_open_meteo()
