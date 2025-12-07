@@ -150,6 +150,9 @@ NEST_API_URL=http://nest-api:3000/api/weather/logs
 # Logging level
 LOG_LEVEL=debug
 ```
+### OBS
+
+API do GEMINI deve ser griada e inserida no .env
 
 ### 2. Subir todos os serviços
 
