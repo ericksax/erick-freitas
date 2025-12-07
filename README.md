@@ -139,6 +139,17 @@ GEMINI_API_KEY=
 
 CORS_ORIGIN=*
 ```
+## worker go
+```
+RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+RABBITMQ_QUEUE=weather_queue
+
+# NestJS API
+NEST_API_URL=http://nest-api:3000/api/weather/logs
+
+# Logging level
+LOG_LEVEL=debug
+```
 
 ### 2. Subir todos os serviços
 
